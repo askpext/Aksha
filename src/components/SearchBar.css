@@ -1,0 +1,75 @@
+.search-bar {
+    padding: 0;
+    position: relative;
+    transition: all var(--transition-normal);
+    width: 100%;
+}
+
+.hm-search-container {
+    background: #ffffff;
+    border-bottom: 1px solid #000000;
+    /* Sharp edges */
+    border-radius: 0;
+}
+
+.search-bar:focus-within {
+    /* H&M style focus is usually just the input cursor or a slightly thicker underline */
+    border-bottom-width: 2px;
+}
+
+.search-content {
+    position: relative;
+    z-index: 1;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 12px 0;
+    margin: 0 16px;
+}
+
+.search-icon {
+    color: #000000;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+}
+
+.search-input {
+    flex: 1;
+    background: transparent;
+    border: none;
+    outline: none;
+    color: #000000;
+    font-size: 14px;
+    font-weight: 500;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    font-family: 'Inter', sans-serif;
+}
+
+.search-input::placeholder {
+    color: #777777;
+}
+
+.loading-spinner {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+}
+
+.spinner {
+    width: 14px;
+    height: 14px;
+    border: 2px solid rgba(0, 0, 0, 0.1);
+    border-top-color: #000000;
+    border-radius: 50%;
+    animation: spin 0.6s linear infinite;
+}
+
+@keyframes spin {
+    to {
+        transform: rotate(360deg);
+    }
+}
