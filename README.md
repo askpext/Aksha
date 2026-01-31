@@ -10,7 +10,7 @@ Aksha provides an instantaneous, keyboard-centric workflow for locating files an
 
 *   **High-Performance Indexing:** A custom Rust-based indexing engine traverses the file system with minimal resource overhead, caching file metadata for rapid access.
 *   **Instant Search Retrieval:** Search results are populated in real-time as the query is typed, utilizing fuzzy matching algorithms for error tolerance.
-*   **Global Hotkey Activation:** Activated instantly from any context using `Alt + Space`, allowing for seamless integration into existing workflows.
+*   **Global Hotkey Activation:** Activated instantly from any context using `ctrl + Space`, allowing for seamless integration into existing workflows.
 *   **File Preview & Execution:** Supports direct file opening and location navigation. Integrated preview capabilities for common file types.
 *   **Minimalist Interface:** Features a clean, distraction-free UI with glassmorphism effects, designed to blend with the modern Windows 11 aesthetic.
 *   **Resource Efficiency:** Engineered to maintain a low memory footprint (typically <50MB RAM) when idle.
@@ -34,7 +34,7 @@ The latest stable release works out-of-the-box. Download the installer (`.exe`) 
 
 1.  Download `Aksha_x.x.x_x64_en-US.msi`.
 2.  Run the installer and follow the on-screen prompts.
-3.  Launch Aksha. Use `Alt + Space` to toggle the search bar.
+3.  Launch Aksha. Use `ctrl + Space` to toggle the search bar.
 
 ## Development Setup
 
