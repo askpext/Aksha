@@ -1,6 +1,7 @@
 # Aksha
 
 Aksha is a high-performance system-wide file search utility for Windows, designed to replicate the efficiency and aesthetics of macOS Spotlight. Built on the Tauri framework, it leverages Rust for the backend indexing engine and React for a modern, responsive frontend interface.
+<img width="1293" height="506" alt="image" src="https://github.com/user-attachments/assets/903ae26b-8950-466c-aed8-86e4d25a52e1" />
 
 ## Overview
 
