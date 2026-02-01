@@ -1,6 +1,7 @@
 import { useState, useEffect, useCallback, useRef } from 'react';
 import { invoke } from '@tauri-apps/api/core';
 import { getCurrentWindow } from '@tauri-apps/api/window';
+import { enable, isEnabled } from "@tauri-apps/plugin-autostart";
 import type { SearchResult } from './types';
 import SearchBar from './components/SearchBar';
 import ResultsList from './components/ResultsList';
@@ -26,7 +27,22 @@ function App() {
     result: null,
   });
 
+
   const searchTimeoutRef = useRef<number | null>(null);
+
+  useEffect(() => {
+    const initAutoStart = async () => {
+      try {
+        if (!(await isEnabled())) {
+          await enable();
+          console.debug("Auto-start enabled");
+        }
+      } catch (error) {
+        console.error("Failed to enable auto-start:", error);
+      }
+    };
+    initAutoStart();
+  }, []);
 
   // Close context menu on click outside
   useEffect(() => {
