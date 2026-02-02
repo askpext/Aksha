@@ -7,6 +7,7 @@ mod commands;
 
 use tauri::{Manager, WindowEvent};
 use tauri_plugin_global_shortcut::{Code, Modifiers, Shortcut, GlobalShortcutExt};
+use tauri_plugin_autostart::ManagerExt;
 use std::sync::{Arc, Mutex};
 use indexer::FileIndex;
 
@@ -28,6 +29,14 @@ fn main() {
         .plugin(tauri_plugin_autostart::init(tauri_plugin_autostart::MacosLauncher::LaunchAgent, Some(vec![])))
         .plugin(tauri_plugin_global_shortcut::Builder::new().build())
         .setup(move |app| {
+            // Enable autostart
+            let autostart_manager = app.autolaunch();
+            if let Err(e) = autostart_manager.enable() {
+                eprintln!("Failed to enable autostart: {}", e);
+            } else {
+                println!("Autostart enabled successfully");
+            }
+            
             // Get the main window
             let window = app.get_webview_window("main").unwrap();
             
