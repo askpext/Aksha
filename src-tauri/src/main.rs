@@ -11,14 +11,6 @@ use tauri_plugin_autostart::ManagerExt;
 use std::sync::{Arc, Mutex};
 use indexer::FileIndex;
 
-#[cfg(target_os = "windows")]
-use windows::Win32::UI::WindowsAndMessaging::{
-    GetWindowLongW, SetWindowLongW, GWL_STYLE, GWL_EXSTYLE, WS_POPUP, WS_EX_LAYERED, WS_EX_WINDOWEDGE,
-    WS_EX_CLIENTEDGE, WS_EX_DLGMODALFRAME, WS_EX_STATICEDGE, SWP_FRAMECHANGED, SWP_NOMOVE, SWP_NOSIZE,
-    SWP_NOZORDER, SWP_NOOWNERZORDER, SetWindowPos, WS_CAPTION, WS_THICKFRAME, WS_MINIMIZEBOX, WS_MAXIMIZEBOX,
-    WS_SYSMENU, WS_BORDER, WS_DLGFRAME,
-};
-
 fn main() {
     // Initialize file index
     let file_index = Arc::new(Mutex::new(FileIndex::new()));

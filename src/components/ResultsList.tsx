@@ -32,10 +32,6 @@ function ResultsList({ results, selectedIndex, onSelect, onContextMenu }: Result
         return date.toLocaleDateString();
     };
 
-    const getFileName = (path: string): string => {
-        return path.split('\\').pop() || path;
-    };
-
     const getFilePath = (path: string): string => {
         const parts = path.split('\\');
         parts.pop();
@@ -69,14 +65,20 @@ function ResultsList({ results, selectedIndex, onSelect, onContextMenu }: Result
                     >
                         <FileIcon extension={result.extension} />
                         <div className="result-info">
-                            <div className="result-name">{getFileName(result.path)}</div>
-                            <div className="result-meta">
-                                <span className="result-path">{getFilePath(result.path)}</span>
-                                <span className="result-separator">•</span>
-                                <span className="result-size">{formatFileSize(result.size)}</span>
-                                <span className="result-separator">•</span>
-                                <span className="result-date">{formatDate(result.modified)}</span>
-                            </div>
+                            <div className="result-name">{result.name}</div>
+                            {result.extension === 'calc' ? (
+                                <div className="result-meta">
+                                    <span className="result-path">Press Enter to copy</span>
+                                </div>
+                            ) : (
+                                <div className="result-meta">
+                                    <span className="result-path">{getFilePath(result.path)}</span>
+                                    <span className="result-separator">|</span>
+                                    <span className="result-size">{formatFileSize(result.size)}</span>
+                                    <span className="result-separator">|</span>
+                                    <span className="result-date">{formatDate(result.modified)}</span>
+                                </div>
+                            )}
                         </div>
                     </div>
                 ))}

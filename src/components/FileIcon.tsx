@@ -11,7 +11,7 @@ function FileIcon({ extension }: FileIconProps) {
         const audioExts = ['mp3', 'wav', 'flac', 'aac', 'm4a'];
         const codeExts = ['js', 'ts', 'jsx', 'tsx', 'py', 'java', 'cpp', 'c', 'rs', 'go', 'html', 'css', 'json', 'xml', 'yaml', 'yml'];
         const docExts = ['doc', 'docx', 'pdf', 'txt', 'md'];
-        const appExts = ['exe', 'lnk', 'msi', 'bat', 'cmd'];
+        const appExts = ['exe', 'lnk', 'msi', 'bat', 'cmd', 'url', 'appref-ms'];
         const archiveExts = ['zip', 'rar', '7z', 'tar', 'gz'];
 
         // Folder: Simple Folder Icon

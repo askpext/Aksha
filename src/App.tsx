@@ -2,7 +2,7 @@ import { useState, useEffect, useCallback, useRef } from 'react';
 import { invoke } from '@tauri-apps/api/core';
 import { getCurrentWindow } from '@tauri-apps/api/window';
 import { enable, isEnabled } from "@tauri-apps/plugin-autostart";
-import type { SearchResult } from './types';
+import type { IndexStatus, SearchResult } from './types';
 import SearchBar from './components/SearchBar';
 import ResultsList from './components/ResultsList';
 import ContextMenu from './components/ContextMenu';
@@ -20,6 +20,7 @@ function App() {
   const [results, setResults] = useState<SearchResult[]>([]);
   const [selectedIndex, setSelectedIndex] = useState(0);
   const [isLoading, setIsLoading] = useState(false);
+  const [searchRevision, setSearchRevision] = useState(0);
   const [contextMenu, setContextMenu] = useState<ContextMenuState>({
     visible: false,
     x: 0,
@@ -27,8 +28,13 @@ function App() {
     result: null,
   });
 
-
   const searchTimeoutRef = useRef<number | null>(null);
+  const queryRef = useRef(query);
+  const indexStatusRef = useRef<IndexStatus | null>(null);
+
+  useEffect(() => {
+    queryRef.current = query;
+  }, [query]);
 
   useEffect(() => {
     const initAutoStart = async () => {
@@ -42,6 +48,37 @@ function App() {
       }
     };
     initAutoStart();
+  }, []);
+
+  useEffect(() => {
+    let isMounted = true;
+
+    const pollIndexStatus = async () => {
+      try {
+        const nextStatus = await invoke<IndexStatus>('get_index_status');
+        const previousStatus = indexStatusRef.current;
+        indexStatusRef.current = nextStatus;
+
+        const queryValue = queryRef.current.trim();
+        const indexingJustFinished = previousStatus?.is_indexing && !nextStatus.is_indexing;
+        const initialIndexBecameAvailable =
+          (previousStatus?.total_files ?? 0) === 0 && nextStatus.total_files > 0 && !nextStatus.is_indexing;
+
+        if (isMounted && queryValue !== '' && (indexingJustFinished || initialIndexBecameAvailable)) {
+          setSearchRevision((current) => current + 1);
+        }
+      } catch (error) {
+        console.debug('Unable to read index status', error);
+      }
+    };
+
+    pollIndexStatus();
+    const intervalId = window.setInterval(pollIndexStatus, 1500);
+
+    return () => {
+      isMounted = false;
+      window.clearInterval(intervalId);
+    };
   }, []);
 
   // Close context menu on click outside
@@ -114,7 +151,7 @@ function App() {
         clearTimeout(searchTimeoutRef.current);
       }
     };
-  }, [query]);
+  }, [query, searchRevision]);
 
   // Handle keyboard navigation
   const handleKeyDown = useCallback(

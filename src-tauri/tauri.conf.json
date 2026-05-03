@@ -1,6 +1,6 @@
 {
   "productName": "Aksha",
-  "version": "0.0.3",
+  "version": "0.0.5",
   "identifier": "org.pext.aksha",
   "build": {
     "beforeDevCommand": "npm run dev",
